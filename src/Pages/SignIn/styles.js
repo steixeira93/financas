@@ -43,7 +43,7 @@ export const SubmitText = styled.Text`
 `;
 
 export const Link = styled.TouchableOpacity`
-   margin-top: 5px;
+   margin-top: 20px;
    margin-bottom: 9px;
 `;
 
