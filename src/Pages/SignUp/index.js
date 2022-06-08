@@ -1,5 +1,6 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import { View, Text, Platform } from 'react-native';
+import { AuthContext } from '../../Contexts/auth';
 
 import { Background, Container, Logo, AreaInput, Input,
         SubmitButton, SubmitText, Link, LinkText } from '../SignIn/styles';
@@ -9,6 +10,7 @@ export default function SignIn() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [nome, setNome] = useState('');
+  const { user } = useContext(AuthContext);
 
  return (
    <Background>
