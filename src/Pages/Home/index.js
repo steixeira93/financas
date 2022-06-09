@@ -1,5 +1,4 @@
 import React, { useContext, useState } from 'react';
-import { View, Text, Button } from 'react-native';
 
 import { AuthContext } from '../../Contexts/auth';
 import Header from '../../Components/Header'
@@ -12,8 +11,8 @@ export default function Home() {
   const [historico, setHistorico] = useState([
     {key: '1', tipo: 'receita', valor: 1200},
     {key: '2', tipo: 'despesa', valor: 300},
-    {key: '3', tipo: 'receita', valor: 40},
-    {key: '4', tipo: 'receita', valor: 250},
+    {key: '3', tipo: 'despesa', valor: 40},
+    {key: '4', tipo: 'despesa', valor: 250},
     {key: '5', tipo: 'despesa', valor: 89.72},
     {key: '6', tipo: 'despesa', valor: 35},
     {key: '7', tipo: 'despesa', valor: 89.72},
@@ -26,7 +25,7 @@ export default function Home() {
       <Background>
         <Header/>
         <Container>
-          <Nome>Samuel</Nome>
+          <Nome>{user && user.nome}</Nome>
           <Saldo>R$ 5.000,00</Saldo>
         </Container>
 
