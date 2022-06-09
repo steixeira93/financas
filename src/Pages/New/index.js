@@ -1,10 +1,39 @@
-import React from 'react';
-import { View, Text } from 'react-native';
+import React, {useState} from 'react';
+import { SafeAreaView, Keyboard, TouchableWithoutFeedback } from 'react-native';
+
+import Header from '../../Components/Header';
+import { Background, Input, SubmitButton, SubmitText } from './styles';
+import Picker from '../../Components/Picker';
 
 export default function New() {
- return (
-   <View>
-       <Text>New</Text>
-   </View>
+  
+  const [valor, setValor] = useState('');
+  const [tipo, setTipo] = useState('receita');
+
+  return (
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+      <Background>
+        <Header />
+        <SafeAreaView style={{ alignItems: 'center' }}>
+          <Input
+            placeholder="Valor desejado"
+            keyboardType="numeric"
+            returnKeyType="next"
+            onSubmitEditing={ () => Keyboard.dismiss() }
+            value={valor}
+            onChangeText={ (text) => setValor(text)}
+          />
+
+          <Picker
+            onChange={setTipo}
+            tipo={tipo}
+          />
+
+          <SubmitButton>
+            <SubmitText>Registrar</SubmitText>
+          </SubmitButton>
+        </SafeAreaView>
+      </Background>
+    </TouchableWithoutFeedback>
   );
 }
