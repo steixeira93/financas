@@ -1,4 +1,6 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
+import firebase from '../../services/firebaseConnection'
+import { format } from 'date-fns';
 
 import { AuthContext } from '../../Contexts/auth';
 import Header from '../../Components/Header'
@@ -8,25 +10,46 @@ import { Background, Container, Nome, Saldo, Title, List  } from './styles'
 
 export default function Home() {
 
-  const [historico, setHistorico] = useState([
-    {key: '1', tipo: 'receita', valor: 1200},
-    {key: '2', tipo: 'despesa', valor: 300},
-    {key: '3', tipo: 'despesa', valor: 40},
-    {key: '4', tipo: 'despesa', valor: 250},
-    {key: '5', tipo: 'despesa', valor: 89.72},
-    {key: '6', tipo: 'despesa', valor: 35},
-    {key: '7', tipo: 'despesa', valor: 89.72},
-    {key: '8', tipo: 'despesa', valor: 400},
-  ]);
+  const [historico, setHistorico] = useState([]);
+  const [saldo, setSaldo] = useState(0);
 
   const {user} = useContext(AuthContext);
+  const uid = user && user.uid;
+
+  useEffect(() => {
+    async function loadList() {
+      await firebase.database().ref('users').child(uid).on('value', (snapshot) => {
+        setSaldo(snapshot.val().saldo);
+      });
+
+      await firebase.database().ref('historico')
+      .child(uid)
+      .orderByChild('date').equalTo(format(new Date, 'dd/MM/yy'))
+      .limitToLast(10).on('value', (snapshot) => {
+        setHistorico([]);
+
+        snapshot.forEach((childItem) => {
+          let list = {
+            key: childItem.key,
+            tipo: childItem.val().tipo,
+            valor: childItem.val().valor
+          };
+
+          setHistorico(oldArray => [...oldArray, list].reverse());
+        })
+      })
+
+    }
+
+    loadList();
+  }, [])
 
  return (
       <Background>
         <Header/>
         <Container>
           <Nome>{user && user.nome}</Nome>
-          <Saldo>R$ 5.000,00</Saldo>
+          <Saldo> {saldo.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')} </Saldo>
         </Container>
 
         <Title>Ultimas movimentações</Title>

@@ -2,7 +2,7 @@ import React from 'react';
 import {Picker as RNPickerSelect} from '@react-native-picker/picker';
 import { PickerView } from './styles';
 
-export default function Picker( onChange, tipo) {
+export default function Picker({ onChange, tipo }) {
  return (
    <PickerView>
        <RNPickerSelect
