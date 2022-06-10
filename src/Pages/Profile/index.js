@@ -1,5 +1,5 @@
-import React, {useContext} from 'react';
-import {useNavigation} from '@react-navigation/native';
+import React, { useContext } from 'react';
+import { useNavigation } from '@react-navigation/native';
 import { View, Text } from 'react-native';
 import Header from '../../Components/Header'
 
@@ -8,26 +8,26 @@ import { AuthContext } from '../../Contexts/auth';
 import { Container, Nome, NewLink, NewText, Logout, LogoutText } from './styles'
 
 export default function Profile() {
-  
+
   const navigation = useNavigation();
 
-  const {user, signOut} = useContext(AuthContext);
+  const { user, signOut } = useContext(AuthContext);
 
- return (
-   <Container>
-        <Header/>
-       <Nome>
-            {user && user.nome}
-       </Nome> 
+  return (
+    <Container>
+      <Header />
+      <Nome>
+        {user && user.nome}
+      </Nome>
 
-       <NewLink onPress={() => navigation.navigate('Registrar')}>
-            <NewText>Registrar gastos</NewText>
-       </NewLink>
+      <NewLink onPress={() => navigation.navigate('Registrar')}>
+        <NewText>Registrar gastos</NewText>
+      </NewLink>
 
-       <Logout onPress={ () => signOut() }>
-         <LogoutText>Sair</LogoutText>
-       </Logout>
+      <Logout onPress={() => signOut()}>
+        <LogoutText>Sair</LogoutText>
+      </Logout>
 
-   </Container>
+    </Container>
   );
 }
